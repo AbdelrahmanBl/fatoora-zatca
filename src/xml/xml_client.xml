@@ -1,0 +1,25 @@
+        <cac:Party>
+            <cac:PartyIdentification>
+                <cbc:ID schemeID="NAT">SET_CLIENT_VAT_NUMBER</cbc:ID>
+            </cac:PartyIdentification>
+            <cac:PostalAddress>
+                <cbc:StreetName>SET_CLIENT_STREET_NAME</cbc:StreetName>
+                <cbc:BuildingNumber>SET_CLIENT_BUILDING_NUMBER</cbc:BuildingNumber>
+                <cbc:PlotIdentification>SET_CLIENT_PLOT_IDENTIFICATION</cbc:PlotIdentification>
+                <cbc:CitySubdivisionName>SET_CLIENT_SUB_DIVISION_NAME</cbc:CitySubdivisionName>
+                <cbc:CityName>SET_CLIENT_CITY_NAME</cbc:CityName>
+                <cbc:PostalZone>SET_CLIENT_POSTAL_ZONE</cbc:PostalZone>
+                
+                <cac:Country>
+                    <cbc:IdentificationCode>SA</cbc:IdentificationCode>
+                </cac:Country>
+            </cac:PostalAddress>
+            <cac:PartyTaxScheme>
+                <cac:TaxScheme>
+                    <cbc:ID>VAT</cbc:ID>
+                </cac:TaxScheme>
+            </cac:PartyTaxScheme>
+            <cac:PartyLegalEntity>
+                <cbc:RegistrationName>SET_CLIENT_REGISTRATION_NAME</cbc:RegistrationName>
+            </cac:PartyLegalEntity>
+        </cac:Party>

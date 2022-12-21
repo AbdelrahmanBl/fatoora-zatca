@@ -1,0 +1,67 @@
+SET_XML_ENCODING<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+SET_UBL_EXTENSIONS_FOR_SIGNED
+    <cbc:ProfileID>reporting:1.0</cbc:ProfileID>
+    <cbc:ID>SET_INVOICE_SERIAL_NUMBER</cbc:ID>
+    <cbc:UUID>SET_TERMINAL_UUID</cbc:UUID>
+    <cbc:IssueDate>SET_ISSUE_DATE</cbc:IssueDate>
+    <cbc:IssueTime>SET_ISSUE_TIME</cbc:IssueTime>
+    <cbc:InvoiceTypeCode name="SET_DOCUMENT">SET_INVOICE_TYPE</cbc:InvoiceTypeCode>
+    <cbc:DocumentCurrencyCode>SET_CURRENCY</cbc:DocumentCurrencyCode>
+    <cbc:TaxCurrencyCode>SET_CURRENCY</cbc:TaxCurrencyCode>
+SET_BILLING_REFERENCE
+    <cac:AdditionalDocumentReference>
+        <cbc:ID>ICV</cbc:ID>
+        <cbc:UUID>SET_INVOICE_COUNTER_NUMBER</cbc:UUID>
+    </cac:AdditionalDocumentReference>
+    <cac:AdditionalDocumentReference>
+        <cbc:ID>PIH</cbc:ID>
+        <cac:Attachment>
+            <cbc:EmbeddedDocumentBinaryObject mimeCode="text/plain">SET_PREVIOUS_INVOICE_HASH</cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+    </cac:AdditionalDocumentReference>
+SET_QR_AND_SIGNATURE_FOR_SIGNED
+    <cac:AccountingSupplierParty>
+        <cac:Party>
+            <cac:PartyIdentification>
+                <cbc:ID schemeID="CRN">SET_COMMERCIAL_REGISTRATION_NUMBER</cbc:ID>
+            </cac:PartyIdentification>
+            <cac:PostalAddress>
+                <cbc:StreetName>SET_STREET_NAME</cbc:StreetName>
+                <cbc:BuildingNumber>SET_BUILDING_NUMBER</cbc:BuildingNumber>
+                <cbc:PlotIdentification>SET_PLOT_IDENTIFICATION</cbc:PlotIdentification>
+                <cbc:CitySubdivisionName>SET_CITY_SUBDIVISION</cbc:CitySubdivisionName>
+                <cbc:CityName>SET_CITY</cbc:CityName>
+                <cbc:PostalZone>SET_POSTAL_NUMBER</cbc:PostalZone>
+                <cac:Country>
+                    <cbc:IdentificationCode>SET_SUPPLIER_COUNTRY</cbc:IdentificationCode>
+                </cac:Country>
+            </cac:PostalAddress>
+            <cac:PartyTaxScheme>
+                <cbc:CompanyID>SET_VAT_NUMBER</cbc:CompanyID>
+                <cac:TaxScheme>
+                    <cbc:ID>VAT</cbc:ID>
+                </cac:TaxScheme>
+            </cac:PartyTaxScheme>
+            <cac:PartyLegalEntity>
+                <cbc:RegistrationName>SET_VAT_NAME</cbc:RegistrationName>
+            </cac:PartyLegalEntity>
+        </cac:Party>
+    </cac:AccountingSupplierParty>
+    <cac:AccountingCustomerParty>
+SET_CLIENT
+    </cac:AccountingCustomerParty>
+SET_PAYMENT_TYPE
+SET_TAX_TOTALS
+    <cac:TaxTotal>
+        <cbc:TaxAmount currencyID="SET_CURRENCY">TOTAL_TAX_AMOUNT</cbc:TaxAmount>
+    </cac:TaxTotal>
+    <cac:LegalMonetaryTotal>
+        <cbc:LineExtensionAmount currencyID="SET_CURRENCY">SET_LINE_EXTENSION_AMOUNT</cbc:LineExtensionAmount>
+        <cbc:TaxExclusiveAmount currencyID="SET_CURRENCY">SET_LINE_EXTENSION_AMOUNT</cbc:TaxExclusiveAmount>
+        <cbc:TaxInclusiveAmount currencyID="SET_CURRENCY">SET_NET_TOTAL</cbc:TaxInclusiveAmount>
+        <cbc:AllowanceTotalAmount currencyID="SET_CURRENCY">0</cbc:AllowanceTotalAmount>
+        <cbc:PrepaidAmount currencyID="SET_CURRENCY">0</cbc:PrepaidAmount>
+        <cbc:PayableAmount currencyID="SET_CURRENCY">SET_NET_TOTAL</cbc:PayableAmount>
+    </cac:LegalMonetaryTotal>
+SET_INVOICE_LINES
+</Invoice>

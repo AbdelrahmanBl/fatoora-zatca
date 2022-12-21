@@ -1,0 +1,4 @@
+    <cac:TaxTotal>
+        <cbc:TaxAmount currencyID="SET_CURRENCY">SET_TAX_AMOUNT</cbc:TaxAmount>
+SET_TAX_LINES
+    </cac:TaxTotal>
