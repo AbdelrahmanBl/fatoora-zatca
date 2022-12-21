@@ -1,5 +1,5 @@
 {
-    "name": "bl/fatoora-zatca",
+    "name": "abdelrahmanbl/fatoora-zatca",
     "description": "this package handle the stage 2 of zatca for integration the tax and simpilified tax invoices.",
     "type": "library",
     "require": {
