@@ -13,7 +13,7 @@ class HandleResponseAction
      * @param  mixed $response
      * @return array
      */
-    public function handle(mixed $httpcode, mixed $response): array
+    public function handle($httpcode, $response): array
     {
         if((int) $httpcode === 200) {
 
