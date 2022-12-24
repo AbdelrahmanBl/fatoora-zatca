@@ -19,7 +19,7 @@ class XmlInvoiceItemsService
     /**
      * the invoice items.
      *
-     * @var Collection
+     * @var array
      */
     protected $invoiceItems;
 
@@ -33,7 +33,7 @@ class XmlInvoiceItemsService
     {
         $this->invoice      = $invoice;
 
-        $this->invoiceItems = collect($invoice->invoice_items);
+        $this->invoiceItems = $invoice->invoice_items;
     }
 
     /**
@@ -96,7 +96,7 @@ class XmlInvoiceItemsService
     {
         $taxSubtotalXml = '';
 
-        $this->invoiceItems->map(function($item) use (&$taxSubtotalXml) {
+        foreach($this->invoiceItems as $item) {
 
             $taxSubtotalXmlItem = (new GetXmlFileAction)->handle('xml_tax_line');
 
@@ -122,7 +122,7 @@ class XmlInvoiceItemsService
 
             $taxSubtotalXml .= $taxSubtotalXmlItem . '\n';
 
-        });
+        }
 
         $taxSubtotalXml = rtrim($taxSubtotalXml, '\n');
 
@@ -158,7 +158,7 @@ class XmlInvoiceItemsService
 
             $xml = str_replace('ITEM_TOTAL_INCLUDE_TAX', (new PriceFormat)->transform($item->total), $xml);
 
-            $isLastItem = $index == $this->invoiceItems->count();
+            $isLastItem = $index == count($this->invoiceItems);
 
             $xml = str_replace(
                 'ITEM_TAX_CATEGORY',
