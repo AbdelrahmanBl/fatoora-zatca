@@ -127,7 +127,7 @@ class HashInvoiceService
      * @param  mixed $value
      * @return void
      */
-    protected function setXmlInvoiceItem(string $tag, mixed $value): void
+    protected function setXmlInvoiceItem(string $tag, $value): void
     {
         $this->invoiceXml = str_replace($tag, $value, $this->invoiceXml);
     }

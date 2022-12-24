@@ -3,6 +3,7 @@
 namespace Bl\FatooraZatca\Services\Settings;
 
 use Bl\FatooraZatca\Actions\PostRequestAction;
+use Bl\FatooraZatca\Helpers\ConfigHelper;
 
 class Cert509Service
 {
@@ -40,7 +41,7 @@ class Cert509Service
      */
     public function generate(object &$settings): void
     {
-        $this->isProduction = config('zatca.app.is_production');
+        $this->isProduction = ConfigHelper::isProduction();
 
         if($this->isProduction) {
 

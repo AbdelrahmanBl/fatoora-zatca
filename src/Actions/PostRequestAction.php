@@ -2,6 +2,8 @@
 
 namespace Bl\FatooraZatca\Actions;
 
+use Bl\FatooraZatca\Helpers\ConfigHelper;
+
 class PostRequestAction
 {
     /**
@@ -15,7 +17,7 @@ class PostRequestAction
      */
     public function handle(string $route, array $data, array $headers, string $USERPWD): array
     {
-        $portal = config('zatca.app.is_production') ? config('zatca.portals.production') : config('zatca.portals.local');
+        $portal = ConfigHelper::portal();
 
         $ch     = curl_init($portal . $route);
 

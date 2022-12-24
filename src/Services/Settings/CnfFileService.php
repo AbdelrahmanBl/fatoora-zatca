@@ -2,6 +2,8 @@
 
 namespace Bl\FatooraZatca\Services\Settings;
 
+use Bl\FatooraZatca\Helpers\ConfigHelper;
+
 class CnfFileService
 {
     /**
@@ -58,7 +60,7 @@ class CnfFileService
      */
     protected function setCertificateTemplateName(): void
     {
-        $CTN = config('zatca.app.is_production') ? 'ZATCA' : 'TSTZATCA';
+        $CTN = ConfigHelper::isProduction() ? 'ZATCA' : 'TSTZATCA';
 
         $this->certificateTemplateName = "{$CTN}-Code-Signing";
     }

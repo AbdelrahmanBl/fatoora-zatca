@@ -31,7 +31,7 @@ class Client
         string $plot_identification,
         string $city_subdivision_name,
         string $city,
-        string $country = 'SA',
+        string $country = 'SA'
     )
     {
         $this->street_name              = $street_name;

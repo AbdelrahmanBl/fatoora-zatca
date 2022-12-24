@@ -10,7 +10,7 @@ class PriceFormat
      * @param  mixed $number
      * @return string
      */
-    public function transform(mixed $number): string
+    public function transform($number): string
     {
         return number_format((float) $number, 2, '.', '');
     }

@@ -47,4 +47,17 @@ class Zatca
     {
         return (new ReportInvoiceService($seller, $invoice, $client))->reporting();
     }
+
+    /**
+     * report testing invoice.
+     *
+     * @param  \Bl\FatooraZatca\Objects\Setting   $seller
+     * @param  \Bl\FatooraZatca\Objects\Invoice   $invoice
+     * @param  \Bl\FatooraZatca\Objects\Client    $client
+     * @return array
+     */
+    public static function reportTestingInvoice(Seller $seller, Invoice $invoice, Client $client = null): array
+    {
+        return (new ReportInvoiceService($seller, $invoice, $client))->test();
+    }
 }

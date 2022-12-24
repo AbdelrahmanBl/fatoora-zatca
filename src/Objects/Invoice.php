@@ -94,7 +94,7 @@ class Invoice
         string      $previous_hash = null,
         int         $invoice_billing_id = null,
         string      $refund_reason = null,
-        string      $currency = 'SAR',
+        string      $currency = 'SAR'
     )
     {
         $this->id                       = $id;

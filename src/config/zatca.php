@@ -13,8 +13,7 @@ return [
         'production'    => 'https://gw-apic-gov.gazt.gov.sa/e-invoicing/developer-portal',
     ],
     'app' => [
-        'environment'   => env('ZATCA_ENVIRONMENT', env('APP_ENV', 'local')),
-        'is_production' => env('ZATCA_ENVIRONMENT', env('APP_ENV', 'local')) == 'production',  # local|production
+        'environment'   => env('ZATCA_ENVIRONMENT', env('APP_ENV', 'local')), # local|production
     ],
 
 

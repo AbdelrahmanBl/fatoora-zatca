@@ -3,6 +3,7 @@
 namespace Bl\FatooraZatca\Services;
 
 use Bl\FatooraZatca\Actions\PostRequestAction;
+use Bl\FatooraZatca\Helpers\ConfigHelper;
 use Bl\FatooraZatca\Services\Invoice\HashInvoiceService;
 use Bl\FatooraZatca\Services\Invoice\SignInvoiceService;
 
@@ -53,6 +54,8 @@ class ReportInvoiceService
      */
     public function reporting(): array
     {
+        ConfigHelper::mustAllow('production');
+
         $route = '/invoices/reporting/single';
 
         return $this->report($route, '0200000');
@@ -65,8 +68,23 @@ class ReportInvoiceService
      */
     public function clearance(): array
     {
+        ConfigHelper::mustAllow('production');
+
         $route = '/invoices/clearance/single';
-        // $route = '/compliance/invoices';
+
+        return $this->report($route, '0100000');
+    }
+
+    /**
+     * test reporting the invoice from zatca portal.
+     *
+     * @return array
+     */
+    public function test(): array
+    {
+        ConfigHelper::mustAllow('local');
+
+        $route = '/compliance/invoices';
 
         return $this->report($route, '0100000');
     }
@@ -109,6 +127,6 @@ class ReportInvoiceService
             $USERPWD
         );
 
-        dd($response);
+        return $response;
     }
 }
