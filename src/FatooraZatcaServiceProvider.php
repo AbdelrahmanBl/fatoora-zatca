@@ -13,7 +13,7 @@ class FatooraZatcaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(__DIR__ . '/config/zatca.php', 'zatca');
     }
 
     /**
@@ -24,7 +24,7 @@ class FatooraZatcaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/zatca.php' =>  config_path('zatca.php'),
+            __DIR__ . '/config/zatca.php' =>  config_path('zatca.php'),
          ], 'fatoora-zatca');
     }
 }
