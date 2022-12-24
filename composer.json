@@ -5,7 +5,6 @@
     "require": {
         "phpseclib/phpseclib": "3.0|3.0.0"
     },
-    "license": "Bl",
     "autoload": {
         "psr-4": {
             "Bl\\FatooraZatca\\": "src/"
