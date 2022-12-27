@@ -48,7 +48,7 @@ class Setting
         string $taxNumber,
         string $registeredAddress,
         string $businessCategory,
-        string $egsSerialNumber,
+        string $egsSerialNumber = NULL,
         string $invoiceType = '1100',
         string $countryName = 'SA'
     )
@@ -61,10 +61,39 @@ class Setting
         $this->taxNumber                    = $taxNumber;
         $this->registeredAddress            = $registeredAddress;
         $this->businessCategory             = $businessCategory;
-        $this->egsSerialNumber              = $egsSerialNumber;
+        $this->egsSerialNumber              = $egsSerialNumber ?? $this->generateEgsSerialNumber();
         $this->invoiceType                  = $invoiceType;
         $this->countryName                  = $countryName;
     }
 
+    /**
+     * generate egs serial number.
+     * 
+     * @return string
+     */
+    public function generateEgsSerialNumber(): string
+    {
+        $egs  = [];
 
+        for($i = 1; $i <= 3; $i++) {
+
+            $seed = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+            
+            shuffle($seed);
+            
+            $randKeys = array_rand($seed, 3);
+            
+            $chars = '';
+            
+            foreach($randKeys as $key) {
+
+                $chars .= $seed[$key];
+                
+            }
+
+            $egs[] = "{$i}-{$chars}";
+        }
+
+        return implode('|', $egs);
+    }
 }
