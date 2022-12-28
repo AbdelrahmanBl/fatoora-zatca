@@ -67,6 +67,7 @@ class XmlInvoiceItemsService
 
         // TODO : handle multiple taxes & discounts. (must edit invoice_items).
         $invoice_content = str_replace('SET_INVOICE_LINES', $this->getInvoiceLineXmlContent(), $invoice_content);
+        // dd($invoice_content);
     }
 
     /**
@@ -120,7 +121,7 @@ class XmlInvoiceItemsService
                 $taxSubtotalXmlItem
             );
 
-            $taxSubtotalXml .= $taxSubtotalXmlItem . '\n';
+            $taxSubtotalXml .= $taxSubtotalXmlItem;
 
         }
 
@@ -171,7 +172,7 @@ class XmlInvoiceItemsService
                 $xml
             );
 
-            $invoiceLineXml .= $xml . '\n';
+            $invoiceLineXml .= $xml;
 
         }
 
