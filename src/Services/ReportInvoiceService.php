@@ -127,6 +127,8 @@ class ReportInvoiceService
             $USERPWD
         );
 
-        return $response;
+        return array_merge($response, [
+            'invoiceHash'   => $invoiceHash
+        ]);
     }
 }

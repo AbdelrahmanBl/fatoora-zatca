@@ -33,7 +33,7 @@ class XmlInvoiceItemsService
     {
         $this->invoice      = $invoice;
 
-        $this->invoiceItems = $invoice->invoice_items;
+        $this->invoiceItems = array_values($invoice->invoice_items);
     }
 
     /**
