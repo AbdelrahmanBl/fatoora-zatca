@@ -2,6 +2,7 @@
 
 namespace Bl\FatooraZatca;
 
+use Bl\FatooraZatca\Classes\DocumentType;
 use Bl\FatooraZatca\Objects\Client;
 use Bl\FatooraZatca\Objects\Invoice;
 use Bl\FatooraZatca\Objects\Seller;
@@ -46,6 +47,19 @@ class Zatca
     public static function reportSimplifiedInvoice(Seller $seller, Invoice $invoice, Client $client = null): array
     {
         return (new ReportInvoiceService($seller, $invoice, $client))->reporting();
+    }
+
+    /**
+     * calculate simplified invoice.
+     *
+     * @param  \Bl\FatooraZatca\Objects\Setting   $seller
+     * @param  \Bl\FatooraZatca\Objects\Invoice   $invoice
+     * @param  \Bl\FatooraZatca\Objects\Client    $client
+     * @return array
+     */
+    public static function calculateSimplifiedInvoice(Seller $seller, Invoice $invoice, Client $client = null): array
+    {
+        return (new ReportInvoiceService($seller, $invoice, $client))->calculate(DocumentType::SIMPILIFIED);
     }
 
     /**

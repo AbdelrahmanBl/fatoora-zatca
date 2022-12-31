@@ -3,6 +3,7 @@
 namespace Bl\FatooraZatca\Services;
 
 use Bl\FatooraZatca\Actions\PostRequestAction;
+use Bl\FatooraZatca\Classes\DocumentType;
 use Bl\FatooraZatca\Helpers\ConfigHelper;
 use Bl\FatooraZatca\Services\Invoice\HashInvoiceService;
 use Bl\FatooraZatca\Services\Invoice\SignInvoiceService;
@@ -58,7 +59,7 @@ class ReportInvoiceService
 
         $route = '/invoices/reporting/single';
 
-        return $this->report($route, '0200000');
+        return $this->report($route, DocumentType::SIMPILIFIED);
     }
 
     /**
@@ -72,7 +73,7 @@ class ReportInvoiceService
 
         $route = '/invoices/clearance/single';
 
-        return $this->report($route, '0100000');
+        return $this->report($route, DocumentType::STANDARD);
     }
 
     /**
@@ -86,7 +87,7 @@ class ReportInvoiceService
 
         $route = '/compliance/invoices';
 
-        return $this->report($route, '0100000');
+        return $this->report($route, DocumentType::SIMPILIFIED);
     }
 
     /**
@@ -97,6 +98,38 @@ class ReportInvoiceService
      * @return array
      */
     public function report(string $route, string $document_type): array
+    {
+        $calculateInvoice = $this->calculate($document_type);
+
+        $USERPWD = $this->seller->certificate . ':' . $this->seller->secret;
+
+        $response = (new PostRequestAction)->handle($route,
+        [
+            'invoiceHash' => $calculateInvoice['invoiceHash'], # hashed invoice in base64 format
+            'uuid' => $this->invoice->invoice_uuid,
+            'invoice' => $calculateInvoice['clearedInvoice'], # signed invoice in base64 format
+        ],
+        [
+            'Content-Type: application/json',
+            'Accept-Language: en',
+            'Accept-Version: V2',
+            'Clearance-Status: 1'
+        ],
+            $USERPWD
+        );
+
+        return array_merge($response, [
+            'invoiceHash'   => $calculateInvoice['invoiceHash']
+        ]);
+    }
+
+    /**
+     * calculate the invoice of zatca.
+     *
+     * @param  string $document_type
+     * @return array
+     */
+    public function calculate(string $document_type): array
     {
         $hashInvoiceService = new HashInvoiceService($this->seller, $this->invoice, $this->client);
 
@@ -109,26 +142,9 @@ class ReportInvoiceService
             $invoiceHash
         ))->generate();
 
-
-        $USERPWD = $this->seller->certificate . ':' . $this->seller->secret;
-
-        $response = (new PostRequestAction)->handle($route,
-        [
-            'invoiceHash' => $invoiceHash, # hashed invoice in base64 format
-            'uuid' => $this->invoice->invoice_uuid,
-            'invoice' => $signedXmlContent, # signed invoice in base64 format
-        ],
-        [
-            'Content-Type: application/json',
-            'Accept-Language: en',
-            'Accept-Version: V2',
-            'Clearance-Status: 1'
-        ],
-            $USERPWD
-        );
-
-        return array_merge($response, [
-            'invoiceHash'   => $invoiceHash
-        ]);
+        return [
+            'invoiceHash'       => $invoiceHash,
+            'clearedInvoice'    => $signedXmlContent,
+        ];
     }
 }
