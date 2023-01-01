@@ -11,9 +11,8 @@ use Bl\FatooraZatca\Objects\Setting;
 use Bl\FatooraZatca\Services\ReportInvoiceService;
 use Bl\FatooraZatca\Services\SettingService;
 
-class Zatca
+class ZatcaTest
 {
-
     /**
      * __construct
      *
@@ -21,7 +20,7 @@ class Zatca
      */
     public function __construct()
     {
-        ConfigHelper::mustAllow('production');
+        ConfigHelper::mustAllow('local');
     }
 
 
@@ -46,7 +45,7 @@ class Zatca
      */
     public static function reportStandardInvoice(Seller $seller, Invoice $invoice, Client $client): array
     {
-        return (new ReportInvoiceService($seller, $invoice, $client))->clearance();
+        return (new ReportInvoiceService($seller, $invoice, $client))->test(DocumentType::STANDARD);
     }
 
     /**
@@ -59,7 +58,7 @@ class Zatca
      */
     public static function reportSimplifiedInvoice(Seller $seller, Invoice $invoice, Client $client = null): array
     {
-        return (new ReportInvoiceService($seller, $invoice, $client))->reporting();
+        return (new ReportInvoiceService($seller, $invoice, $client))->test(DocumentType::SIMPILIFIED);
     }
 
     /**
@@ -74,4 +73,5 @@ class Zatca
     {
         return (new ReportInvoiceService($seller, $invoice, $client))->calculate(DocumentType::SIMPILIFIED);
     }
+
 }
