@@ -3,7 +3,6 @@
 namespace Bl\FatooraZatca\Helpers;
 
 use Bl\FatooraZatca\Objects\InvoiceItem;
-use Carbon\Carbon;
 
 class InvoiceHelper
 {
@@ -28,9 +27,7 @@ class InvoiceHelper
     public function getSigningTime(object $invoice): string
     {
         // TODO : must send the date of signing time when post simplified invoice.
-        $timestamp = "{$invoice->invoice_date} {$invoice->invoice_time}";
-
-        return Carbon::parse($timestamp)->toIso8601ZuluString();
+        return "{$invoice->invoice_date}T{$invoice->invoice_time}Z";
     }
 
     /**
@@ -41,9 +38,7 @@ class InvoiceHelper
      */
     public function getTimestamp(object $invoice): string
     {
-        $timestamp = "{$invoice->invoice_date} {$invoice->invoice_time}";
-
-        return Carbon::parse($timestamp)->toDateTimeLocalString() . 'Z';
+        return "{$invoice->invoice_date}T{$invoice->invoice_time}Z";
     }
 
     /**
