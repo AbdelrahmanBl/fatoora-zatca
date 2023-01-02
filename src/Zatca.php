@@ -13,18 +13,6 @@ use Bl\FatooraZatca\Services\SettingService;
 
 class Zatca
 {
-
-    /**
-     * __construct
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        ConfigHelper::mustAllow('production');
-    }
-
-
     /**
      * generate zatca setting.
      *
@@ -46,7 +34,12 @@ class Zatca
      */
     public static function reportStandardInvoice(Seller $seller, Invoice $invoice, Client $client): array
     {
-        return (new ReportInvoiceService($seller, $invoice, $client))->clearance();
+        if(ConfigHelper::isProduction()) {
+            return (new ReportInvoiceService($seller, $invoice, $client))->clearance();
+        }
+        else {
+            return (new ReportInvoiceService($seller, $invoice, $client))->test(DocumentType::STANDARD);
+        }
     }
 
     /**
@@ -59,7 +52,12 @@ class Zatca
      */
     public static function reportSimplifiedInvoice(Seller $seller, Invoice $invoice, Client $client = null): array
     {
-        return (new ReportInvoiceService($seller, $invoice, $client))->reporting();
+        if(ConfigHelper::isProduction()) {
+            return (new ReportInvoiceService($seller, $invoice, $client))->reporting();
+        }
+        else {
+            return (new ReportInvoiceService($seller, $invoice, $client))->test(DocumentType::SIMPILIFIED);
+        }
     }
 
     /**
