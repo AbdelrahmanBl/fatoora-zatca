@@ -8,4 +8,5 @@ class PaymentType
     const CREDIT        = 30;
     const BANK_ACCOUNT  = 42;
     const BANK_CARD     = 48;
+    const MULTIPLE      = 1;
 }

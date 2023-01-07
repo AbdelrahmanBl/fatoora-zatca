@@ -3,6 +3,7 @@
 namespace Bl\FatooraZatca\Services\Invoice;
 
 use Bl\FatooraZatca\Actions\GetXmlFileAction;
+use Bl\FatooraZatca\Classes\InvoiceType;
 
 class HashInvoiceService
 {
@@ -113,7 +114,7 @@ class HashInvoiceService
 
         $this->setAccountingCustomerParty();
 
-        $this->setInvoicePaymentType();  // TODO : seperate refund reason if you can.
+        $this->setInvoicePaymentMeans();
 
         (new XmlInvoiceItemsService($this->invoice))->generate($this->invoiceXml);
 
@@ -237,30 +238,63 @@ class HashInvoiceService
     }
 
     /**
-     * set invoice payment type & refund reason when refund xml data.
+     * set invoice payment type.
+     * set invoice note.
+     * set payment note.
      *
      * @return void
      */
-    protected function setInvoicePaymentType(): void
+    protected function setInvoicePaymentMeans(): void
     {
         $paymentTypeContent = (new GetXmlFileAction)->handle('xml_payment_means');
 
         $paymentTypeContent = str_replace('SET_INVOICE_PAYMENT_TYPE', $this->invoice->payment_type, $paymentTypeContent);
 
-        $returnReasonContent = '';
+        $invoiceNoteContent = '';
 
-        if((int) $this->invoice->invoice_type == 383) {
+        $invoiceType = (int) $this->invoice->invoice_type;
 
-            $returnReasonContent = (new GetXmlFileAction)->handle('xml_refund_reason');
+        if(in_array($invoiceType, [InvoiceType::REFUND_INVOICE, InvoiceType::CREDIT_NOTE])) {
 
-            $returnReason = $this->invoice->refund_reason ?? 'Refund Items';
+            $invoiceNoteContent = (new GetXmlFileAction)->handle('xml_invoice_note');
 
-            $returnReasonContent = str_replace('SET_INVOICE_RETURN_REASON', $returnReason, $returnReasonContent);
+            $reason = $this->invoice->invoice_note ?? $this->getDefaultReason($invoiceType);
+
+            $invoiceNoteContent = str_replace('SET_INVOICE_NOTE', $reason, $invoiceNoteContent);
 
         }
 
-        $paymentTypeContent = str_replace('SET_INVOICE_RETURN_REASON', $returnReasonContent, $paymentTypeContent);
+        $paymentNoteContent = '';
+
+        if($this->invoice->payment_note) {
+
+            $paymentNoteContent = (new GetXmlFileAction)->handle('xml_payment_note');
+
+            $paymentNoteContent = str_replace('SET_PAYMENT_NOTE', $this->invoice->payment_note, $paymentNoteContent);
+
+        }
+
+        $paymentTypeContent = str_replace('SET_INVOICE_NOTE', $invoiceNoteContent, $paymentTypeContent);
+
+        $paymentTypeContent = str_replace('SET_PAYMENT_NOTE', $paymentNoteContent, $paymentTypeContent);
 
         $this->setXmlInvoiceItem('SET_PAYMENT_TYPE', $paymentTypeContent);
+    }
+
+    /**
+     * get default reason of [refund|credit]
+     *
+     * @param  int $invoiceType
+     * @return string
+     */
+    protected function getDefaultReason(int $invoiceType): string
+    {
+        if($invoiceType === InvoiceType::REFUND_INVOICE) {
+            return 'Refund Items';
+        }
+        else if ($invoiceType === InvoiceType::CREDIT_NOTE) {
+            return 'Credit Invoice';
+        }
+        else return '';
     }
 }

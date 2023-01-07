@@ -1,4 +1,5 @@
    <cac:PaymentMeans>
       <cbc:PaymentMeansCode>SET_INVOICE_PAYMENT_TYPE</cbc:PaymentMeansCode>
-      SET_INVOICE_RETURN_REASON
+      SET_INVOICE_NOTE
+      SET_PAYMENT_NOTE
    </cac:PaymentMeans>

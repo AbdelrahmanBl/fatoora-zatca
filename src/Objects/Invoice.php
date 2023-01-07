@@ -47,12 +47,25 @@ class Invoice
      * 30 CREDIT
      * 42 BANK_ACCOUNT
      * 48 BANK_CARD
+     * 1  MULTIPLE
      *
      * @var int
      */
     public $payment_type;
 
-    public $refund_reason;
+    /**
+     * invoice note when invoice type is DEBIT_NOTE|CREDIT_NOTE.
+     *
+     * @var string
+     */
+    public $invoice_note;
+
+    /**
+     * payment note when multiple payment eg:cash,visa
+     *
+     * @var string
+     */
+    public $payment_note;
 
     public $currency;
 
@@ -93,7 +106,8 @@ class Invoice
         array       $invoice_items,
         string      $previous_hash = null,
         int         $invoice_billing_id = null,
-        string      $refund_reason = null,
+        string      $invoice_note = null,
+        string      $payment_note = null,
         string      $currency = 'SAR'
     )
     {
@@ -105,7 +119,8 @@ class Invoice
         $this->invoice_time             = $invoice_time;
         $this->invoice_type             = $invoice_type;
         $this->payment_type             = $payment_type;
-        $this->refund_reason            = $refund_reason;
+        $this->invoice_note             = $invoice_note;
+        $this->payment_note             = $payment_note;
         $this->currency                 = $currency;
         $this->previous_hash            = $previous_hash;
         $this->price                    = $price;
