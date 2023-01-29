@@ -64,9 +64,18 @@ class ConfigHelper
     protected static function get(string $key)
     {
         if(function_exists('config')) {
-            return config($key);
+            // when codeigniter v4 framework
+            if(is_object(config('Zatca'))) {
+                $config = explode('.', str_replace('zatca.', '', $key));
+                return  config('Zatca')->zatca[$config[0]][$config[1]];
+            }
+            // when laravel framework
+            else {
+                return config($key);
+            }
         }
         elseif(function_exists('config_item')) {
+            // when codeigniter old versions framework
             return config_item($key);
         }
         else {
