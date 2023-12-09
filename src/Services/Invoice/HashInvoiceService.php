@@ -114,6 +114,8 @@ class HashInvoiceService
 
         $this->setAccountingCustomerParty();
 
+        $this->setDeliveryDate();
+
         $this->setInvoicePaymentMeans();
 
         (new XmlInvoiceItemsService($this->invoice))->generate($this->invoiceXml);
@@ -142,7 +144,7 @@ class HashInvoiceService
         $this->setXmlInvoiceItem('SET_INVOICE_SERIAL_NUMBER', $this->invoice->invoice_number);
         $this->setXmlInvoiceItem('SET_TERMINAL_UUID', $this->invoice->invoice_uuid);
         $this->setXmlInvoiceItem('SET_ISSUE_DATE', $this->invoice->invoice_date);
-        $this->setXmlInvoiceItem('SET_ISSUE_TIME', $this->invoice->invoice_time);
+        $this->setXmlInvoiceItem('SET_ISSUE_TIME', $this->invoice->invoice_time . 'Z');
         $this->setXmlInvoiceItem('SET_INVOICE_TYPE', $this->invoice->invoice_type);
         $this->setXmlInvoiceItem('SET_DOCUMENT', $this->documentType);
         $this->setXmlInvoiceItem('SET_INVOICE_COUNTER_NUMBER', $this->invoice->id);
@@ -235,6 +237,11 @@ class HashInvoiceService
         }
 
         $this->setXmlInvoiceItem('SET_CLIENT', $clientContent);
+    }
+
+    protected function setDeliveryDate(): void
+    {
+        $this->setXmlInvoiceItem('SET_DELIVERY_DATE', $this->invoice->delivery_date);
     }
 
     /**

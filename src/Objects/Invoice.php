@@ -84,6 +84,10 @@ class Invoice
 
     public $total;
 
+    public $tax_percent;
+
+    public $delivery_date;
+
     /**
      * the invoice items.
      *
@@ -108,7 +112,9 @@ class Invoice
         int         $invoice_billing_id = null,
         string      $invoice_note = null,
         string      $payment_note = null,
-        string      $currency = 'SAR'
+        string      $currency = 'SAR',
+        float       $tax_percent = 15,
+        string      $delivery_date = NULL
     )
     {
         $this->id                       = $id;
@@ -128,5 +134,7 @@ class Invoice
         $this->tax                      = $tax;
         $this->total                    = $total;
         $this->invoice_items            = $invoice_items;
+        $this->tax_percent              = $tax_percent;
+        $this->delivery_date            = $delivery_date;
     }
 }

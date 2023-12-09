@@ -49,7 +49,7 @@ class XmlInvoiceItemsService
         // ? total tax of invoice itself.
         $invoice_content = str_replace(
             'TOTAL_TAX_AMOUNT',
-            (new PriceFormat)->transform($this->invoice->total),
+            (new PriceFormat)->transform($this->invoice->tax),
             $invoice_content
         );
 
@@ -97,33 +97,34 @@ class XmlInvoiceItemsService
     {
         $taxSubtotalXml = '';
 
-        foreach($this->invoiceItems as $item) {
+        $item = new InvoiceItem(
+            0, '', 1, $this->invoice->price, $this->invoice->discount, $this->invoice->tax,
+            $this->invoice->tax_percent, $this->invoice->total
+        );
 
-            $taxSubtotalXmlItem = (new GetXmlFileAction)->handle('xml_tax_line');
+        $taxSubtotalXmlItem = (new GetXmlFileAction)->handle('xml_tax_line');
 
-            $itemSubTotal = (new InvoiceHelper)->calculateSubTotal($item);
+        $itemSubTotal = (new InvoiceHelper)->calculateSubTotal($item);
 
-            $taxSubtotalXmlItem = str_replace(
-                'ITEM_SUB_TOTAL',
-                (new PriceFormat)->transform($itemSubTotal),
+        $taxSubtotalXmlItem = str_replace(
+            'ITEM_SUB_TOTAL',
+            (new PriceFormat)->transform($itemSubTotal),
+            $taxSubtotalXmlItem
+        );
+
+        $taxSubtotalXmlItem = str_replace(
+                'ITEM_TOTAL_TAX',
+                (new PriceFormat)->transform($item->tax),
                 $taxSubtotalXmlItem
-            );
+        );
 
-            $taxSubtotalXmlItem = str_replace(
-                    'ITEM_TOTAL_TAX',
-                    (new PriceFormat)->transform($item->tax),
-                    $taxSubtotalXmlItem
-            );
+        $taxSubtotalXmlItem = str_replace(
+            'SET_TAX_VALUE',
+            (new PriceFormat)->transform($item->tax_percent),
+            $taxSubtotalXmlItem
+        );
 
-            $taxSubtotalXmlItem = str_replace(
-                'SET_TAX_VALUE',
-                (new PriceFormat)->transform($item->tax_percent),
-                $taxSubtotalXmlItem
-            );
-
-            $taxSubtotalXml .= $taxSubtotalXmlItem;
-
-        }
+        $taxSubtotalXml .= $taxSubtotalXmlItem;
 
         $taxSubtotalXml = rtrim($taxSubtotalXml, '\n');
 
@@ -147,13 +148,15 @@ class XmlInvoiceItemsService
 
             $xml = str_replace('ITEM_QTY', $item->quantity, $xml);
 
-            $xml = str_replace('ITEM_PRICE', $item->price, $xml);
+            $itemNetPrice = $item->price - $item->discount;
+
+            $xml = str_replace('ITEM_NET_PRICE', (new PriceFormat)->transform($itemNetPrice), $xml);
 
             $xml = str_replace('ITEM_NAME', $item->product_name, $xml);
 
-            $itemSubTotal = (new InvoiceHelper)->calculateSubTotal($item);
+            $itemNetAmount = $item->total - $item->tax;
 
-            $xml = str_replace('ITEM_SUB_TOTAL', (new PriceFormat)->transform($itemSubTotal), $xml);
+            $xml = str_replace('ITEM_NET_AMOUNT', (new PriceFormat)->transform($itemNetAmount), $xml);
 
             $xml = str_replace('ITEM_TOTAL_TAX', (new PriceFormat)->transform($item->tax), $xml);
 

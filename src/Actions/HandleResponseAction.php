@@ -38,11 +38,23 @@ class HandleResponseAction
 
             }
             else if(is_array($response) && array_key_exists('validationResults', $response)) {
-
+dd($response);
                 if(count($response['validationResults']['errorMessages']) > 0) {
 
-                    throw new Exception($response['validationResults']['errorMessages'][0]['message']);
+                    throw new Exception(
+                        collect($response['validationResults']['errorMessages'])
+                        ->pluck('message')
+                        ->implode(' --- ')
+                    );
+                }
 
+                if(count($response['validationResults']['warningMessages']) > 0) {
+
+                    throw new Exception(
+                        collect($response['validationResults']['warningMessages'])
+                        ->pluck('message')
+                        ->implode(' --- ')
+                    );
                 }
 
                 throw new Exception('Unhandeled validation rules exception!');

@@ -50,9 +50,6 @@ SET_QR_AND_SIGNATURE_FOR_SIGNED
     <cac:AccountingCustomerParty>
 SET_CLIENT
     </cac:AccountingCustomerParty>
-    <cac:Delivery>
-        <cbc:ActualDeliveryDate>SET_DELIVERY_DATE</cbc:ActualDeliveryDate>
-    </cac:Delivery>
 SET_PAYMENT_TYPE
 SET_TAX_TOTALS
     <cac:TaxTotal>

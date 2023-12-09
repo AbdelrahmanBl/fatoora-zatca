@@ -1,7 +1,7 @@
     <cac:InvoiceLine>
         <cbc:ID>ITEM_ID</cbc:ID>
         <cbc:InvoicedQuantity unitCode="PCE">ITEM_QTY</cbc:InvoicedQuantity>
-        <cbc:LineExtensionAmount currencyID="SET_CURRENCY">ITEM_SUB_TOTAL</cbc:LineExtensionAmount>
+        <cbc:LineExtensionAmount currencyID="SET_CURRENCY">ITEM_NET_AMOUNT</cbc:LineExtensionAmount>
         <cac:TaxTotal>
             <cbc:TaxAmount currencyID="SET_CURRENCY">ITEM_TOTAL_TAX</cbc:TaxAmount>
             <cbc:RoundingAmount currencyID="SET_CURRENCY">ITEM_TOTAL_INCLUDE_TAX</cbc:RoundingAmount>
@@ -11,7 +11,7 @@
 ITEM_TAX_CATEGORY
         </cac:Item>
         <cac:Price>
-            <cbc:PriceAmount currencyID="SET_CURRENCY">ITEM_PRICE</cbc:PriceAmount>
+            <cbc:PriceAmount currencyID="SET_CURRENCY">ITEM_NET_PRICE</cbc:PriceAmount>
 ITEM_DISCOUNT
         </cac:Price>
     </cac:InvoiceLine>
