@@ -38,7 +38,7 @@ class HandleResponseAction
 
             }
             else if(is_array($response) && array_key_exists('validationResults', $response)) {
-dd($response);
+
                 if(count($response['validationResults']['errorMessages']) > 0) {
 
                     throw new Exception(
