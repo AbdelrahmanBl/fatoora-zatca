@@ -27,7 +27,7 @@ class Zatca
     /**
      * report standard invoice.
      *
-     * @param  \Bl\FatooraZatca\Objects\Setting   $seller
+     * @param  \Bl\FatooraZatca\Objects\Seller    $seller
      * @param  \Bl\FatooraZatca\Objects\Invoice   $invoice
      * @param  \Bl\FatooraZatca\Objects\Client    $client
      * @return array
@@ -45,7 +45,7 @@ class Zatca
     /**
      * report simplified invoice.
      *
-     * @param  \Bl\FatooraZatca\Objects\Setting   $seller
+     * @param  \Bl\FatooraZatca\Objects\Seller    $seller
      * @param  \Bl\FatooraZatca\Objects\Invoice   $invoice
      * @param  \Bl\FatooraZatca\Objects\Client    $client
      * @return array
@@ -63,7 +63,7 @@ class Zatca
     /**
      * calculate simplified invoice.
      *
-     * @param  \Bl\FatooraZatca\Objects\Setting   $seller
+     * @param  \Bl\FatooraZatca\Objects\Seller    $seller
      * @param  \Bl\FatooraZatca\Objects\Invoice   $invoice
      * @param  \Bl\FatooraZatca\Objects\Client    $client
      * @return array
