@@ -135,6 +135,6 @@ class Invoice
         $this->total                    = $total;
         $this->invoice_items            = $invoice_items;
         $this->tax_percent              = $tax_percent;
-        $this->delivery_date            = $delivery_date;
+        $this->delivery_date            = $delivery_date ?? $invoice_date;
     }
 }
