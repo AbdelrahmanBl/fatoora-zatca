@@ -7,13 +7,20 @@ use Illuminate\Support\ServiceProvider;
 class FatooraZatcaServiceProvider extends ServiceProvider
 {
     /**
+     * the path of config file.
+     *
+     * @var string
+     */
+    private $configPath = __DIR__ . '/Config/zatca.php';
+
+    /**
      * Register any application services.
      *
      * @return void
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/zatca.php', 'zatca');
+        $this->mergeConfigFrom($this->configPath, 'zatca');
     }
 
     /**
@@ -24,7 +31,7 @@ class FatooraZatcaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/zatca.php' =>  config_path('zatca.php'),
+            $this->configPath => config_path('zatca.php'),
          ], 'fatoora-zatca');
     }
 }

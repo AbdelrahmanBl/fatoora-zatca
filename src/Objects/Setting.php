@@ -2,6 +2,8 @@
 
 namespace Bl\FatooraZatca\Objects;
 
+use Bl\FatooraZatca\Helpers\EgsSerialNumber;
+
 class Setting
 {
     public $otp;
@@ -61,39 +63,8 @@ class Setting
         $this->taxNumber                    = $taxNumber;
         $this->registeredAddress            = $registeredAddress;
         $this->businessCategory             = $businessCategory;
-        $this->egsSerialNumber              = $egsSerialNumber ?? $this->generateEgsSerialNumber();
+        $this->egsSerialNumber              = $egsSerialNumber ?? EgsSerialNumber::generate();
         $this->invoiceType                  = $invoiceType;
         $this->countryName                  = $countryName;
-    }
-
-    /**
-     * generate egs serial number.
-     * 
-     * @return string
-     */
-    public function generateEgsSerialNumber(): string
-    {
-        $egs  = [];
-
-        for($i = 1; $i <= 3; $i++) {
-
-            $seed = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-            
-            shuffle($seed);
-            
-            $randKeys = array_rand($seed, 3);
-            
-            $chars = '';
-            
-            foreach($randKeys as $key) {
-
-                $chars .= $seed[$key];
-                
-            }
-
-            $egs[] = "{$i}-{$chars}";
-        }
-
-        return implode('|', $egs);
     }
 }
