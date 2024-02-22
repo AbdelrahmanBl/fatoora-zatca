@@ -13,14 +13,19 @@ class Invoiceable
         $this->result = $result;
     }
 
+    public function getResult(): array
+    {
+        return $this->result;
+    }
+
     public function getClearedInvoice(): string
     {
-        return $this->result['clearedInvoice'];
+        return $this->getResult()['clearedInvoice'];
     }
 
     public function getInvoiceHash(): string
     {
-        return $this->result['invoiceHash'];
+        return $this->getResult()['invoiceHash'];
     }
 
     public function getQr(): string
@@ -28,8 +33,8 @@ class Invoiceable
         return (new GetQrFromInvoice)->handle($this->getClearedInvoice());
     }
 
-    public function getResult(): array
+    public function getQrImage(): string
     {
-        return $this->result;
+        return \SimpleSoftwareIO\QrCode\Facades\QrCode::size(300)->generate($this->getQr())->toHtml();
     }
 }
