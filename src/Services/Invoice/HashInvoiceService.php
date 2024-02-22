@@ -69,7 +69,7 @@ class HashInvoiceService
     {
         $this->documentType = $document_type;
 
-        $this->invoiceXml = (new GetXmlFileAction)->handle('xml_to_hash');
+        $this->invoiceXml = GetXmlFileAction::handle('xml_to_hash');
 
         $this->invoiceXml = str_replace("\r", "", $this->invoiceXml);
 
@@ -163,7 +163,7 @@ class HashInvoiceService
 
         if($billingId) {
 
-            $billingReferenceContent = (new GetXmlFileAction)->handle('xml_billing_reference');
+            $billingReferenceContent = GetXmlFileAction::handle('xml_billing_reference');
 
             $billingReferenceContent = str_replace("SET_INVOICE_NUMBER", $billingId, $billingReferenceContent);
 
@@ -222,7 +222,7 @@ class HashInvoiceService
 
         if($this->client) {
 
-            $clientContent = (new GetXmlFileAction)->handle('xml_client');
+            $clientContent = GetXmlFileAction::handle('xml_client');
 
             $clientContent = str_replace('SET_CLIENT_VAT_NUMBER', $this->client->tax_number, $clientContent);
             $clientContent = str_replace('SET_CLIENT_STREET_NAME', $this->client->street_name, $clientContent);
@@ -253,7 +253,7 @@ class HashInvoiceService
      */
     protected function setInvoicePaymentMeans(): void
     {
-        $paymentTypeContent = (new GetXmlFileAction)->handle('xml_payment_means');
+        $paymentTypeContent = GetXmlFileAction::handle('xml_payment_means');
 
         $paymentTypeContent = str_replace('SET_INVOICE_PAYMENT_TYPE', $this->invoice->payment_type, $paymentTypeContent);
 
@@ -263,7 +263,7 @@ class HashInvoiceService
 
         if(in_array($invoiceType, [InvoiceType::REFUND_INVOICE, InvoiceType::CREDIT_NOTE])) {
 
-            $invoiceNoteContent = (new GetXmlFileAction)->handle('xml_invoice_note');
+            $invoiceNoteContent = GetXmlFileAction::handle('xml_invoice_note');
 
             $reason = $this->invoice->invoice_note ?? $this->getDefaultReason($invoiceType);
 
@@ -275,7 +275,7 @@ class HashInvoiceService
 
         if($this->invoice->payment_note) {
 
-            $paymentNoteContent = (new GetXmlFileAction)->handle('xml_payment_note');
+            $paymentNoteContent = GetXmlFileAction::handle('xml_payment_note');
 
             $paymentNoteContent = str_replace('SET_PAYMENT_NOTE', $this->invoice->payment_note, $paymentNoteContent);
 

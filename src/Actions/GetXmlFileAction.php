@@ -10,9 +10,9 @@ class GetXmlFileAction
      * @param  string $filename
      * @return string
      */
-    public function handle(string $filename): string
+    public static function handle(string $filename): string
     {
-        return file_get_contents(__DIR__ . "/../xml/{$filename}.xml");
-        // return file_get_contents(public_path("xml/{$filename}.xml"));
+        return file_get_contents(__DIR__ . "/../Xml/{$filename}.xml");
+        // return file_get_contents(public_path("Xml/{$filename}.xml"));
     }
 }

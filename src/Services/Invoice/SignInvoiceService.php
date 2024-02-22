@@ -158,7 +158,7 @@ class SignInvoiceService
      */
     protected function getUBLExtensions(): string
     {
-        $xml = (new GetXmlFileAction)->handle('xml_ubl_extensions');
+        $xml = GetXmlFileAction::handle('xml_ubl_extensions');
 
         $xml = str_replace('SET_INVOICE_HASH', $this->invoiceHash, $xml);
 
@@ -182,7 +182,7 @@ class SignInvoiceService
      */
     protected function getSignedProperties(): array
     {
-        $xml = (new GetXmlFileAction)->handle('xml_ubl_signed_properties');
+        $xml = GetXmlFileAction::handle('xml_ubl_signed_properties');
 
         $xml = str_replace('SET_SIGN_TIMESTAMP', (new InvoiceHelper)->getSigningTime($this->invoice), $xml);
 
@@ -209,14 +209,14 @@ class SignInvoiceService
      */
     protected function getQRCodeData(): string
     {
-        $xml = (new GetXmlFileAction)->handle('xml_qr_and_signature');
+        $xml = GetXmlFileAction::handle('xml_qr_and_signature');
 
         $data = [
             $this->seller->registration_name,
             $this->seller->tax_number,
             (new InvoiceHelper)->getTimestamp($this->invoice),
-            (new PriceFormat)->transform($this->invoice->total),
-            (new PriceFormat)->transform($this->invoice->tax),
+            PriceFormat::transform($this->invoice->total),
+            PriceFormat::transform($this->invoice->tax),
             $this->invoiceHash,
             $this->digitalSignature,
             $this->publicKey,

@@ -49,26 +49,31 @@ class XmlInvoiceItemsService
         // ? total tax of invoice itself.
         $invoice_content = str_replace(
             'TOTAL_TAX_AMOUNT',
-            (new PriceFormat)->transform($this->invoice->tax),
+            PriceFormat::transform($this->invoice->tax),
             $invoice_content
         );
 
         // <cac:LegalMonetaryTotal>
         $invoice_content = str_replace(
             'SET_LINE_EXTENSION_AMOUNT',
-            (new PriceFormat)->transform($this->invoice->total - $this->invoice->tax),
+            PriceFormat::transform($this->invoice->total - $this->invoice->tax),
             $invoice_content
         );
         $invoice_content = str_replace(
             'SET_NET_TOTAL',
-            (new PriceFormat)->transform($this->invoice->total),
+            PriceFormat::transform($this->invoice->total),
             $invoice_content
         );
+        // $invoice_content = str_replace(
+        //     'SET_ALLOWANCE_TOTAL_AMOUNT',
+        //     0,
+        //     $invoice_content
+        // );
 
         // TODO : handle multiple taxes & discounts. (must edit invoice_items).
         $invoice_content = str_replace('SET_INVOICE_LINES', $this->getInvoiceLineXmlContent(), $invoice_content);
         // dd($this->getInvoiceLineXmlContent());
-        dd($invoice_content);
+        // dd($invoice_content);
     }
 
     /**
@@ -78,9 +83,9 @@ class XmlInvoiceItemsService
      */
     protected function getTaxTotalXmlContent(): string
     {
-        $xml = (new GetXmlFileAction)->handle('xml_tax_totals');
+        $xml = GetXmlFileAction::handle('xml_tax_totals');
 
-        $totalTax = (new PriceFormat)->transform($this->invoice->tax);
+        $totalTax = PriceFormat::transform($this->invoice->tax);
 
         $xml = str_replace("SET_TAX_AMOUNT", $totalTax, $xml);
 
@@ -103,25 +108,25 @@ class XmlInvoiceItemsService
             $this->invoice->tax_percent, $this->invoice->total
         );
 
-        $taxSubtotalXmlItem = (new GetXmlFileAction)->handle('xml_tax_line');
+        $taxSubtotalXmlItem = GetXmlFileAction::handle('xml_tax_line');
 
         $itemSubTotal = (new InvoiceHelper)->calculateSubTotal($item);
 
         $taxSubtotalXmlItem = str_replace(
             'ITEM_SUB_TOTAL',
-            (new PriceFormat)->transform($itemSubTotal),
+            PriceFormat::transform($itemSubTotal),
             $taxSubtotalXmlItem
         );
 
         $taxSubtotalXmlItem = str_replace(
                 'ITEM_TOTAL_TAX',
-                (new PriceFormat)->transform($item->tax),
+                PriceFormat::transform($item->tax),
                 $taxSubtotalXmlItem
         );
 
         $taxSubtotalXmlItem = str_replace(
             'SET_TAX_VALUE',
-            (new PriceFormat)->transform($item->tax_percent),
+            PriceFormat::transform($item->tax_percent),
             $taxSubtotalXmlItem
         );
 
@@ -143,7 +148,7 @@ class XmlInvoiceItemsService
 
         foreach($this->invoiceItems as $index => $item) {
 
-            $xml = (new GetXmlFileAction)->handle('xml_line_item');
+            $xml = GetXmlFileAction::handle('xml_line_item');
 
             $xml = str_replace('ITEM_ID', $item->id, $xml);
 
@@ -151,17 +156,17 @@ class XmlInvoiceItemsService
 
             $itemNetPrice = ($item->price - $item->discount) / $item->quantity;
 
-            $xml = str_replace('ITEM_NET_PRICE', (new PriceFormat)->transform($itemNetPrice), $xml);
+            $xml = str_replace('ITEM_NET_PRICE', PriceFormat::transform($itemNetPrice), $xml);
 
             $xml = str_replace('ITEM_NAME', $item->product_name, $xml);
 
             $itemNetAmount = $item->total - $item->tax;
 
-            $xml = str_replace('ITEM_NET_AMOUNT', (new PriceFormat)->transform($itemNetAmount), $xml);
+            $xml = str_replace('ITEM_NET_AMOUNT', PriceFormat::transform($itemNetAmount), $xml);
 
-            $xml = str_replace('ITEM_TOTAL_TAX', (new PriceFormat)->transform($item->tax), $xml);
+            $xml = str_replace('ITEM_TOTAL_TAX', PriceFormat::transform($item->tax), $xml);
 
-            $xml = str_replace('ITEM_TOTAL_INCLUDE_TAX', (new PriceFormat)->transform($item->total), $xml);
+            $xml = str_replace('ITEM_TOTAL_INCLUDE_TAX', PriceFormat::transform($item->total), $xml);
 
             $isLastItem = $index == count($this->invoiceItems);
 
@@ -194,11 +199,11 @@ class XmlInvoiceItemsService
      */
     protected function getClassifiedTaxCategoryXmlContent(InvoiceItem $item, bool $new_line): string
     {
-        $xml = (new GetXmlFileAction)->handle('xml_line_item_tax_category');
+        $xml = GetXmlFileAction::handle('xml_line_item_tax_category');
 
         $xml = str_replace(
             'PERCENT_VALUE',
-            (new PriceFormat)->transform($item->tax_percent),
+            PriceFormat::transform($item->tax_percent),
             $xml
         );
 
@@ -216,11 +221,11 @@ class XmlInvoiceItemsService
      */
     protected function getAllowanceChargeXmlContent(InvoiceItem $item, bool $new_line): string
     {
-            $xml    = (new GetXmlFileAction)->handle('xml_line_item_discount');
+            $xml    = GetXmlFileAction::handle('xml_line_item_discount');
 
             $xml    = str_replace(
                 'DISCOUNT_VALUE',
-                (new PriceFormat)->transform($item->discount),
+                PriceFormat::transform($item->discount),
                 $xml
             );
 
