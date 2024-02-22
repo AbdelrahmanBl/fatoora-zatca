@@ -67,7 +67,8 @@ class XmlInvoiceItemsService
 
         // TODO : handle multiple taxes & discounts. (must edit invoice_items).
         $invoice_content = str_replace('SET_INVOICE_LINES', $this->getInvoiceLineXmlContent(), $invoice_content);
-        // dd($invoice_content);
+        // dd($this->getInvoiceLineXmlContent());
+        dd($invoice_content);
     }
 
     /**
@@ -148,7 +149,7 @@ class XmlInvoiceItemsService
 
             $xml = str_replace('ITEM_QTY', $item->quantity, $xml);
 
-            $itemNetPrice = $item->price - $item->discount;
+            $itemNetPrice = ($item->price - $item->discount) / $item->quantity;
 
             $xml = str_replace('ITEM_NET_PRICE', (new PriceFormat)->transform($itemNetPrice), $xml);
 
