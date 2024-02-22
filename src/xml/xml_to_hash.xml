@@ -62,7 +62,7 @@ SET_TAX_TOTALS
         <cbc:LineExtensionAmount currencyID="SET_CURRENCY">SET_LINE_EXTENSION_AMOUNT</cbc:LineExtensionAmount>
         <cbc:TaxExclusiveAmount currencyID="SET_CURRENCY">SET_LINE_EXTENSION_AMOUNT</cbc:TaxExclusiveAmount>
         <cbc:TaxInclusiveAmount currencyID="SET_CURRENCY">SET_NET_TOTAL</cbc:TaxInclusiveAmount>
-        <cbc:AllowanceTotalAmount currencyID="SET_CURRENCY">0</cbc:AllowanceTotalAmount>
+        <cbc:AllowanceTotalAmount currencyID="SET_CURRENCY">SET_ALLOWANCE_TOTAL_AMOUNT</cbc:AllowanceTotalAmount>
         <cbc:PrepaidAmount currencyID="SET_CURRENCY">0</cbc:PrepaidAmount>
         <cbc:PayableAmount currencyID="SET_CURRENCY">SET_NET_TOTAL</cbc:PayableAmount>
     </cac:LegalMonetaryTotal>
