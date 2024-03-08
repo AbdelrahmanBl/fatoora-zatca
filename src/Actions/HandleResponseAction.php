@@ -42,18 +42,26 @@ class HandleResponseAction
                 if(count($response['validationResults']['errorMessages']) > 0) {
 
                     throw new Exception(
-                        collect($response['validationResults']['errorMessages'])
-                        ->pluck('message')
-                        ->implode(' --- ')
+                        implode(
+                            ' --- ',
+                            array_column(
+                                $response['validationResults']['errorMessages'],
+                                'message'
+                            )
+                        )
                     );
                 }
 
                 if(count($response['validationResults']['warningMessages']) > 0) {
 
                     throw new Exception(
-                        collect($response['validationResults']['warningMessages'])
-                        ->pluck('message')
-                        ->implode(' --- ')
+                        implode(
+                            ' --- ',
+                            array_column(
+                                $response['validationResults']['warningMessages'],
+                                'message'
+                            )
+                        )
                     );
                 }
 
