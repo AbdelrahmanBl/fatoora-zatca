@@ -79,7 +79,13 @@ class ConfigHelper
             return config_item($key);
         }
         else {
-            throw new Exception("Unhandeled config identifier!");
+            $constant = constant(strtoupper(str_replace('.', '_', $key)));
+
+            if(is_null($constant)) {
+                throw new Exception("Unhandeled config identifier!");
+            }
+
+            return $constant;
         }
     }
 }
