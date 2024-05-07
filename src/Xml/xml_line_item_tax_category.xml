@@ -1,5 +1,5 @@
             <cac:ClassifiedTaxCategory>
-                <cbc:ID>S</cbc:ID>
+                <cbc:ID>TAX_CATEGORY_ID</cbc:ID>
                 <cbc:Percent>PERCENT_VALUE</cbc:Percent>
                 <cac:TaxScheme>
                     <cbc:ID>VAT</cbc:ID>

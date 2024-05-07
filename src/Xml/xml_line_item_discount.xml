@@ -1,5 +1,5 @@
             <cac:AllowanceCharge>
                 <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
-                <cbc:AllowanceChargeReason>DISCOUNT_REASON</cbc:AllowanceChargeReason>
-                <cbc:Amount currencyID="SET_CURRENCY">DISCOUNT_VALUE</cbc:Amount>
+                <cbc:AllowanceChargeReason>ITEM_DISCOUNT_REASON</cbc:AllowanceChargeReason>
+                <cbc:Amount currencyID="SET_CURRENCY">ITEM_DISCOUNT_VALUE</cbc:Amount>
             </cac:AllowanceCharge>

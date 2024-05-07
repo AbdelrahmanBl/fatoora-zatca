@@ -1,9 +1,9 @@
         <cac:TaxSubtotal>
-            <cbc:TaxableAmount currencyID="SET_CURRENCY">ITEM_SUB_TOTAL</cbc:TaxableAmount>
-            <cbc:TaxAmount currencyID="SET_CURRENCY">ITEM_TOTAL_TAX</cbc:TaxAmount>
+            <cbc:TaxableAmount currencyID="SET_CURRENCY">INVOICE_TAXABLE_AMOUNT</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="SET_CURRENCY">INVOICE_TOTAL_TAX</cbc:TaxAmount>
             <cac:TaxCategory>
-                <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5305">S</cbc:ID>
-                <cbc:Percent>SET_TAX_VALUE</cbc:Percent>
+                <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5305">INVOICE_TAX_CODE</cbc:ID>
+                <cbc:Percent>INVOICE_TAX_PERCENT</cbc:Percent>SET_EXEMPTION_REASON_AND_CODE
                 <cac:TaxScheme>
                     <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
                 </cac:TaxScheme>
