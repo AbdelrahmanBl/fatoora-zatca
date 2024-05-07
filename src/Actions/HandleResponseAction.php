@@ -6,6 +6,9 @@ use Exception;
 
 class HandleResponseAction
 {
+    const HTTP_OK = 200;
+    const HTTP_UNAUTHORIZED = 401;
+
     /**
      * handle the response of zatca portal.
      *
@@ -15,57 +18,21 @@ class HandleResponseAction
      */
     public function handle($httpcode, $response): array
     {
-        if((int) $httpcode === 200) {
+        if((int) $httpcode === self::HTTP_OK) {
 
             return $response;
 
         }
-        else if((int) $httpcode === 401) {
+        else if((int) $httpcode === self::HTTP_UNAUTHORIZED) {
 
             throw new Exception('Unauthoroized zatca settings!');
 
         }
-        else {
 
-            if(is_array($response) && array_key_exists('code', $response)) {
-
-                throw new Exception($response['message']);
-
-            }
-            else if(is_array($response) && array_key_exists('errors', $response)) {
-
-                throw new Exception($response['errors'][0]);
-
-            }
-            else if(is_array($response) && array_key_exists('validationResults', $response)) {
-
-                if(count($response['validationResults']['errorMessages']) > 0) {
-
-                    throw new Exception(
-                        collect($response['validationResults']['errorMessages'])
-                        ->pluck('message')
-                        ->implode(' --- ')
-                    );
-                }
-
-                if(count($response['validationResults']['warningMessages']) > 0) {
-
-                    throw new Exception(
-                        collect($response['validationResults']['warningMessages'])
-                        ->pluck('message')
-                        ->implode(' --- ')
-                    );
-                }
-
-                throw new Exception('Unhandeled validation rules exception!');
-
-            }
-            else {
-
-                throw new Exception('Unhandeled zatca error exception!');
-
-            }
-
-        }
+        throw new Exception(
+            empty($response)
+            ? 'Unhandeled zatca error exception!'
+            : json_encode($response)
+        );
     }
 }
