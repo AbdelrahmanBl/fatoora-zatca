@@ -7,4 +7,4 @@ This package handle the phase 2 of the zakat and income authority in the saudi a
 - [x] simulation.
 - [x] production.
 
-> **_Note:_** This package is a demo and if you need the completed package with documentation to use it contact me on [abdelrahmangamal990@gmail.com](mailto:abdelrahmangamal990@gmail.com) and we can determine the price.
+> **_Note:_** This package is a demo and if you need the completed package with documentation to use it contact me on WhatsApp: [+201270115241](https://wa.me/201270115241) or [abdelrahmangamal990@gmail.com](mailto:abdelrahmangamal990@gmail.com) and we can determine the price.
